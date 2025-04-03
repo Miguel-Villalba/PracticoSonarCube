@@ -42,6 +42,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+          # Cambiar al directorio src donde está tu archivo .sln
+          cd src
+          
+          # Comenzar el análisis con SonarQube
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Miguel-Villalba_PracticoSonarCube" /o:"miguel-villalba" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          
+          # Construir la solución
           dotnet build
+          
+          # Finalizar el análisis con SonarQube
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
